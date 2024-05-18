@@ -3,3 +3,40 @@ function getRandomHexColor() {
     .toString(16)
     .padStart(6, 0)}`;
 }
+
+const input = document.querySelector('input');
+const createBtn = document.querySelector('[data-create]');
+const destroyBtn = document.querySelector('[data-destroy]');
+const boxesContainer = document.querySelector('#boxes');
+
+createBtn.addEventListener('click', createBoxes);
+destroyBtn.addEventListener('click', destroyBoxes);
+
+function createBoxes() {
+const amount = Number(input.value);
+ if (amount < 1 || amount > 100 || isNaN(amount)) {
+ return;
+}
+
+clearBoxes();
+  
+let boxesHTML = '';
+let size = 30;
+
+for (let i = 0; i < amount; i++) {
+const color = getRandomHexColor();
+boxesHTML += `<div style="width: ${size}px; height: ${size}px; background-color: ${color}"></div>`;
+size += 10;
+}
+
+boxesContainer.insertAdjacentHTML('beforeend', boxesHTML);
+input.value = '';
+}
+
+function destroyBoxes() {
+  clearBoxes();
+}
+
+function clearBoxes() {
+  boxesContainer.innerHTML = '';
+}
